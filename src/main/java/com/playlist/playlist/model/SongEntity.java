@@ -14,4 +14,12 @@ public class SongEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+
+    public SongEntity() {
+    }
+
+    public SongEntity(String name) {
+        this.name = name;
+    }
 }

@@ -62,4 +62,6 @@ class PlaylistControllerTest {
         List<PlaylistEntity> result = playlistRepository.findAll();
         assertEquals(1, result.size());
     }
+
+
 }

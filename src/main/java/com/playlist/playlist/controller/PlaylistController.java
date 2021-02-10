@@ -20,7 +20,7 @@ public class PlaylistController {
         service.createPlaylist(playlistName);
     }
 
-    @GetMapping
+    @GetMapping("/temp")
     public String DELETEME() {
         return "I AM WORKING!!";
     }
