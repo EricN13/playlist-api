@@ -2,6 +2,7 @@ package com.playlist.playlist.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playlist.playlist.model.PlaylistDto;
 import com.playlist.playlist.model.PlaylistEntity;
 import com.playlist.playlist.model.SongDto;
 import com.playlist.playlist.model.SongEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -120,5 +122,22 @@ class PlaylistControllerTest {
         PlaylistEntity result = playlistRepository.findByName("samplePlaylist");
 
         assertEquals(0, result.getSongs().size());
+    }
+
+    @Test
+    public void getPlaylist() throws Exception {
+        PlaylistEntity playListWithSong = new PlaylistEntity("samplePlaylist");
+        playListWithSong.getSongs().add(new SongEntity("other song"));
+        playlistRepository.save(playListWithSong);
+
+        PlaylistDto playlistDto = new PlaylistDto("samplePlaylist");
+        playlistDto.getSongs().add(new SongDto("other song"));
+
+        ObjectMapper mapper = new ObjectMapper();
+        String expected = mapper.writeValueAsString(playlistDto);
+
+        mockMvc.perform(get("/playlist/samplePlaylist"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(expected));
     }
 }

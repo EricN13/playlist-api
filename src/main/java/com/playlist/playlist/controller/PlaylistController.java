@@ -1,5 +1,6 @@
 package com.playlist.playlist.controller;
 
+import com.playlist.playlist.model.PlaylistDto;
 import com.playlist.playlist.model.SongDto;
 import com.playlist.playlist.service.PlaylistService;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,10 @@ public class PlaylistController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addSong(@PathVariable String playlistName, @PathVariable String songName){
         service.removeSong(playlistName, songName);
+    }
+
+    @GetMapping("/{playlistName}")
+    public PlaylistDto getPlaylist(@PathVariable String playlistName) {
+        return service.getPlaylist(playlistName);
     }
 }
