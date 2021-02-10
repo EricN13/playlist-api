@@ -99,4 +99,34 @@ class PlaylistServiceTest {
         verify(playlistRepository, times(1)).findByName("samplePlaylist");
         verifyNoMoreInteractions(playlistRepository);
     }
+
+    @Test
+    public void removeSong_removesSelectedSongFromPlaylist() {
+        PlaylistEntity playListWithSong = new PlaylistEntity("samplePlaylist");
+        playListWithSong.getSongs().add(new SongEntity("song to remove"));
+        PlaylistEntity playlistWithoutSong = new PlaylistEntity("samplePlaylist");
+
+        when(playlistRepository.findByName("samplePlaylist")).thenReturn(playListWithSong);
+        when(playlistRepository.save(playlistWithoutSong)).thenReturn(null);
+
+        service.removeSong("samplePlaylist", "song to remove");
+
+        verify(playlistRepository, times(1)).findByName("samplePlaylist");
+        verify(playlistRepository, times(1)).save(playlistWithoutSong);
+        verifyNoMoreInteractions(playlistRepository);
+    }
+
+    @Test
+    public void removeSong_doesNotRemoveSongIfNotInPlaylist() {
+        PlaylistEntity playListWithSong = new PlaylistEntity("samplePlaylist");
+        playListWithSong.getSongs().add(new SongEntity("other song"));
+        PlaylistEntity playlistWithoutSong = new PlaylistEntity("samplePlaylist");
+
+        when(playlistRepository.findByName("samplePlaylist")).thenReturn(playListWithSong);
+
+        service.removeSong("samplePlaylist", "song to remove");
+
+        verify(playlistRepository, times(1)).findByName("samplePlaylist");
+        verifyNoMoreInteractions(playlistRepository);
+    }
 }

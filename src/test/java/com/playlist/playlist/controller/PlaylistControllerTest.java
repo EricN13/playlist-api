@@ -111,4 +111,8 @@ class PlaylistControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void removeSong_removesSelectedSongFromPlaylist() {
+
+    }
 }

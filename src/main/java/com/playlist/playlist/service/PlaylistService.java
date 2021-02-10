@@ -56,4 +56,19 @@ public class PlaylistService {
         }
         return false;
     }
+
+    public void removeSong(String playlistName, String songName) {
+        PlaylistEntity playlistToUpdate = playlistRepository.findByName(playlistName);
+        SongEntity songToRemove = null;
+        for(SongEntity song : playlistToUpdate.getSongs()) {
+            if(song.getName().equals(songName)) {
+                songToRemove = song;
+            }
+        }
+        
+        if(songToRemove != null) {
+            playlistToUpdate.getSongs().remove(songToRemove);
+            playlistRepository.save(playlistToUpdate);
+        }
+    }
 }
