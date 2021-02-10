@@ -2,6 +2,7 @@ package com.playlist.playlist.service;
 
 import com.playlist.playlist.exception.AddSongException;
 import com.playlist.playlist.exception.PlaylistCreationException;
+import com.playlist.playlist.model.PlaylistDto;
 import com.playlist.playlist.model.PlaylistEntity;
 import com.playlist.playlist.model.SongDto;
 import com.playlist.playlist.model.SongEntity;
@@ -128,5 +129,22 @@ class PlaylistServiceTest {
 
         verify(playlistRepository, times(1)).findByName("samplePlaylist");
         verifyNoMoreInteractions(playlistRepository);
+    }
+
+    @Test
+    public void getPlaylist_callsFindByName_andReturnsList() {
+        PlaylistEntity playListWithSong = new PlaylistEntity("samplePlaylist");
+        playListWithSong.getSongs().add(new SongEntity("other song"));
+        playListWithSong.getSongs().add(new SongEntity("the best song"));
+        PlaylistDto expected = new PlaylistDto("samplePlaylist");
+        expected.getSongs().add(new SongDto("other song"));
+        expected.getSongs().add(new SongDto("the best song"));
+
+        when(playlistRepository.findByName("samplePlaylist")).thenReturn(playListWithSong);
+
+        PlaylistDto result = service.getPlaylist("samplePlaylist");
+
+        verify(playlistRepository, times(1)).findByName("samplePlaylist");
+        assertEquals(expected, result);
     }
 }

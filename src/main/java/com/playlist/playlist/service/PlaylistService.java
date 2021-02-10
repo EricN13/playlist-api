@@ -2,6 +2,7 @@ package com.playlist.playlist.service;
 
 import com.playlist.playlist.exception.AddSongException;
 import com.playlist.playlist.exception.PlaylistCreationException;
+import com.playlist.playlist.model.PlaylistDto;
 import com.playlist.playlist.model.PlaylistEntity;
 import com.playlist.playlist.model.SongDto;
 import com.playlist.playlist.model.SongEntity;
@@ -44,8 +45,39 @@ public class PlaylistService {
         playlistRepository.save(playlistToUpdate);
     }
 
+    public void removeSong(String playlistName, String songName) {
+        PlaylistEntity playlistToUpdate = playlistRepository.findByName(playlistName);
+        SongEntity songToRemove = null;
+        for(SongEntity song : playlistToUpdate.getSongs()) {
+            if(song.getName().equals(songName)) {
+                songToRemove = song;
+            }
+        }
+
+        if(songToRemove != null) {
+            playlistToUpdate.getSongs().remove(songToRemove);
+            playlistRepository.save(playlistToUpdate);
+        }
+    }
+
+    public PlaylistDto getPlaylist(String playlistName) {
+        return convertToPlaylistDto(playlistRepository.findByName(playlistName));
+    }
+
+    public PlaylistDto convertToPlaylistDto(PlaylistEntity playlistEntity) {
+        PlaylistDto playlistDto = new PlaylistDto(playlistEntity.getName());
+        for(SongEntity song : playlistEntity.getSongs()) {
+            playlistDto.getSongs().add(convertToSongDto(song));
+        }
+        return playlistDto;
+    }
+
     SongEntity convertToSongEntity(SongDto songDto) {
         return new SongEntity(songDto.getName());
+    }
+
+    SongDto convertToSongDto(SongEntity songEntity) {
+        return new SongDto(songEntity.getName());
     }
 
     boolean isSongInPlaylist(List<SongEntity> existingSongs, String songName) {
@@ -55,20 +87,5 @@ public class PlaylistService {
             }
         }
         return false;
-    }
-
-    public void removeSong(String playlistName, String songName) {
-        PlaylistEntity playlistToUpdate = playlistRepository.findByName(playlistName);
-        SongEntity songToRemove = null;
-        for(SongEntity song : playlistToUpdate.getSongs()) {
-            if(song.getName().equals(songName)) {
-                songToRemove = song;
-            }
-        }
-        
-        if(songToRemove != null) {
-            playlistToUpdate.getSongs().remove(songToRemove);
-            playlistRepository.save(playlistToUpdate);
-        }
     }
 }
