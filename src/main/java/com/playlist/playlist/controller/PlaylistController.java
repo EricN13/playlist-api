@@ -21,13 +21,14 @@ public class PlaylistController {
         service.createPlaylist(playlistName);
     }
 
-    @PutMapping("/{playlistName}")
+    @PutMapping("/{playlistName}/song")
     public void addSong(@PathVariable String playlistName, @RequestBody SongDto songDto){
         service.addSong(playlistName, songDto);
     }
 
-    @GetMapping("/temp")
-    public String DELETEME() {
-        return "I AM WORKING!!";
+    @PutMapping("/{playlistName}/song/{songName}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addSong(@PathVariable String playlistName, @PathVariable String songName){
+        service.removeSong(playlistName, songName);
     }
 }

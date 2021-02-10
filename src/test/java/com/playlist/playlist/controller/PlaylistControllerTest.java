@@ -13,15 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
-
 import javax.transaction.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -75,7 +72,7 @@ class PlaylistControllerTest {
         SongDto songDto = new SongDto("some song");
         String songString = mapper.writeValueAsString(songDto);
 
-        mockMvc.perform(put("/playlist/samplePlaylist")
+        mockMvc.perform(put("/playlist/samplePlaylist/song")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(songString))
                 .andExpect(status().isOk());
@@ -93,7 +90,7 @@ class PlaylistControllerTest {
         SongDto songDto = new SongDto("some song");
         String songString = mapper.writeValueAsString(songDto);
 
-        mockMvc.perform(put("/playlist/samplePlaylist")
+        mockMvc.perform(put("/playlist/samplePlaylist/song")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(songString))
                 .andExpect(status().isBadRequest());
@@ -105,14 +102,23 @@ class PlaylistControllerTest {
         SongDto songDto = new SongDto("some song");
         String songString = mapper.writeValueAsString(songDto);
 
-        mockMvc.perform(put("/playlist/samplePlaylist")
+        mockMvc.perform(put("/playlist/samplePlaylist/song")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(songString))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void removeSong_removesSelectedSongFromPlaylist() {
+    public void removeSong_removesSelectedSongFromPlaylist() throws Exception {
+        PlaylistEntity playListWithSong = new PlaylistEntity("samplePlaylist");
+        playListWithSong.getSongs().add(new SongEntity("other-song"));
+        playlistRepository.save(playListWithSong);
 
+        mockMvc.perform(put("/playlist/samplePlaylist/song/other-song"))
+                .andExpect(status().isNoContent());
+
+        PlaylistEntity result = playlistRepository.findByName("samplePlaylist");
+
+        assertEquals(0, result.getSongs().size());
     }
 }
