@@ -1,0 +1,110 @@
+= PlayList Api
+
+== Create Playlist
+
+.request
+include::{snippets}/createPlaylist/http-request.adoc[]
+
+.response
+include::{snippets}/createPlaylist/http-response.adoc[]
+
+.request parameters
+include::{snippets}/createPlaylist/request-parameters.adoc[]
+
+
+== Add Song to Playlist
+
+.request
+include::{snippets}/addSong/http-request.adoc[]
+
+.response
+include::{snippets}/addSong/http-response.adoc[]
+
+.path parameters
+include::{snippets}/addSong/path-parameters.adoc[]
+
+.request fields
+include::{snippets}/addSong/request-fields.adoc[]
+
+
+== Remove Song From Playlist
+
+.request
+include::{snippets}/removeSong/http-request.adoc[]
+
+.response
+include::{snippets}/removeSong/http-response.adoc[]
+
+.path parameters
+include::{snippets}/removeSong/path-parameters.adoc[]
+
+
+== Get Selected Playlist
+
+.request
+include::{snippets}/getPlaylist/http-request.adoc[]
+
+.response
+include::{snippets}/getPlaylist/http-response.adoc[]
+
+.path parameters
+include::{snippets}/getPlaylist/path-parameters.adoc[]
+
+.response fields
+include::{snippets}/getPlaylist/response-fields.adoc[]
+
+
+= PlayList Api Exceptions
+
+== Create Playlist With Name That Already Exists
+
+.request
+include::{snippets}/createAlreadyExists/http-request.adoc[]
+
+.response
+include::{snippets}/createAlreadyExists/http-response.adoc[]
+
+.request parameters
+include::{snippets}/createAlreadyExists/request-parameters.adoc[]
+
+
+== Create Playlist Without Providing Name
+
+.request
+include::{snippets}/createNoName/http-request.adoc[]
+
+.response
+include::{snippets}/createNoName/http-response.adoc[]
+
+.request parameters
+include::{snippets}/createNoName/request-parameters.adoc[]
+
+
+== Add Song Throws Exception If Song Already In Playlist
+
+.request
+include::{snippets}/songAlreadyInPlaylist/http-request.adoc[]
+
+.response
+include::{snippets}/songAlreadyInPlaylist/http-response.adoc[]
+
+.path parameters
+include::{snippets}/songAlreadyInPlaylist/path-parameters.adoc[]
+
+.request fields
+include::{snippets}/songAlreadyInPlaylist/request-fields.adoc[]
+
+
+== Add Song Throws Exception If Selected Playlist Does Not Exist
+
+.request
+include::{snippets}/addPlaylistDoesntExist/http-request.adoc[]
+
+.response
+include::{snippets}/addPlaylistDoesntExist/http-response.adoc[]
+
+.path parameters
+include::{snippets}/addPlaylistDoesntExist/path-parameters.adoc[]
+
+.request fields
+include::{snippets}/songAlreadyInPlaylist/request-fields.adoc[]

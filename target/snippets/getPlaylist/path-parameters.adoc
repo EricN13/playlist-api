@@ -1,0 +1,8 @@
+.+/playlist/{playlistName}+
+|===
+|Parameter|Description
+
+|`+playlistName+`
+|name of playlist where song is to be removed
+
+|===

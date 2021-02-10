@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+name+`
+|`+String+`
+|name of playlist
+
+|`+songs+`
+|`+Array+`
+|list of songs in playlist
+
+|`+songs.[].name+`
+|`+String+`
+|name of song
+
+|===

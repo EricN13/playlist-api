@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"name":"samplePlaylist","songs":[{"name":"other song"}]}
+----

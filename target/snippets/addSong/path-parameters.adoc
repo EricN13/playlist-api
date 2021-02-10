@@ -1,0 +1,8 @@
+.+/playlist/{playlistName}/song+
+|===
+|Parameter|Description
+
+|`+playlistName+`
+|name of playlist to add song
+
+|===

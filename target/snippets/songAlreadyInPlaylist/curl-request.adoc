@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/playlist/samplePlaylist/song' -i -X PUT \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{"name":"some song"}'
+----

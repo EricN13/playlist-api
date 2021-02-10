@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"name":"some song"}' | http PUT 'http://localhost:8080/playlist/samplePlaylist/song' \
+    'Content-Type:application/json;charset=UTF-8'
+----
